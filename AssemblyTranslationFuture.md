@@ -78,6 +78,6 @@ The pattern file of the entire computer and ROM in Game of Life can be found [TO
 
 Now that we've made Tetris, we're done, right? Not even close. We have several more goals for this project that we are working towards:
 
-- I am working with Dave Greene and K Zhang on a more efficient metafier script, that can run independently of Golly, and work with the MacroCell file format, for faster speed, smaller files, and more efficient memory usage. We're also discussing possibly switching metapixels (or modifying the OTCA metapixel) so that metapixels can be generated and placed independently of each other, for parallelization and more efficient storage.
+- I am working with Dave Greene and K Zhang on a more efficient metafier script, that can run independently of Golly, and will work directly with the MacroCell file format, for faster speed, smaller files, and more efficient memory usage. We're also discussing possibly switching metapixels (or modifying the OTCA metapixel) so that metapixels can be generated and placed independently of each other, for parallelization and more efficient storage.
 - quartata is working on a LLVM backend for the QFT computer, which will allow us to compile any program in any language that LLVM supports and output a ROM that the computer can use.
 - We are discussing the next program that we want to write for the QFT computer. Right now, Pong looks like a nice goal.
