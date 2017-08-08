@@ -3,6 +3,32 @@ A place to draft the answers for the tetris PPCG challenge
 
 Here's the overall plan: we are going to split the content across multiple answers, structured like one large multi-part answer.  We will organize the contents so that each anwerer gets the opportunity to talk more-or-less about the parts of the project that they were most involved in.  We will decide a presentation order and then post our answers in that order so that they remain in order when sorted by oldest.
 
+Current Presentation Order
+-
+
+1. PhiNotPi
+ - Overview
+ - The tetris game
+ - QFTASM basics
+ - Cogol
+2. El'endia Starman
+ - QFTASM details
+ - Some basic metapixel stuff
+ - Varlife
+ - Simple logic gates and wires
+3. K Zhang
+ - computer hardware (multiplexor, RAM, ROM, etc.)
+4. Muddyfish
+ - new language and compiler
+5. ? kritixi lithos
+ - more new language stuff
+6. Mego
+ - Conversion to GoL
+ - More metapixel stuff
+ - Future directions
+7. ? quartata
+ - LLVM
+
 Rough list of topics
 -
 
