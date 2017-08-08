@@ -18,15 +18,15 @@ Current Presentation Order
 4. PhiNotPi
     - QFTASM
     - Cogol
-4. Muddyfish
+5. Muddyfish
     - new language and compiler
-5. ? kritixi lithos
+6. ? kritixi lithos
     - more new language stuff
-6. Mego
+7. Mego
     - Conversion to GoL
     - More metapixel stuff
     - Future directions
-7. ? quartata
+8. ? quartata
     - LLVM
 
 Rough list of topics
