@@ -6,28 +6,28 @@ Here's the overall plan: we are going to split the content across multiple answe
 Current Presentation Order
 -
 
-1. PhiNotPi
- - Overview
- - The tetris game
- - QFTASM basics
- - Cogol
+1. PhiNotPi (probably CW)
+    - Overview
+    - The tetris game
 2. El'endia Starman
- - QFTASM details
- - Some basic metapixel stuff
- - Varlife
- - Simple logic gates and wires
+    - Some basic metapixel stuff
+    - Varlife
+    - Simple logic gates and wires
 3. K Zhang
- - computer hardware (multiplexor, RAM, ROM, etc.)
+    - computer hardware (multiplexor, RAM, ROM, etc.)
+4. PhiNotPi
+    - QFTASM
+    - Cogol
 4. Muddyfish
- - new language and compiler
+    - new language and compiler
 5. ? kritixi lithos
- - more new language stuff
+    - more new language stuff
 6. Mego
- - Conversion to GoL
- - More metapixel stuff
- - Future directions
+    - Conversion to GoL
+    - More metapixel stuff
+    - Future directions
 7. ? quartata
- - LLVM
+    - LLVM
 
 Rough list of topics
 -
