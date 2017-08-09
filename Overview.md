@@ -40,7 +40,7 @@ Here is an illustration of our processor architecture:
 
 [2]: https://i.stack.imgur.com/JXmnf.png
 
-From here it is just a matter of implementing Tetris on the computer.  To help accomplish this, we have worked on multiple methods of compiiling higher-level language to QFTASM.  We have a basic language called Cogol, a second more advanced language under development, and finally we have an under-construction LLVM backend.  The current Tetris program was written in / compiled from Cogol
+From here it is just a matter of implementing Tetris on the computer.  To help accomplish this, we have worked on multiple methods of compiling higher-level language to QFTASM.  We have a basic language called Cogol, a second, more advanced language under development, and finally we have an under-construction LLVM backend.  The current Tetris program was written in / compiled from Cogol.
 
 Once the final Tetris QFTASM code was generated, the final steps were to assemble from this code to corresponding ROM, and then from metapixels to the underlying Game of Life, completing our construction.
 
