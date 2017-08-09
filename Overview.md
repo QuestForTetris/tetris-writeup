@@ -64,12 +64,12 @@ Our computer represents the Tetris board as a grid within its memory.  Addresses
 
 Input to the game is performed by manually editing the contents of RAM address 1.  Using the QFTASM interpreter, this means performing direct writes to address 1.  Each move only requires aditing a single bit of RAM, and this input register is automatically cleared after the input event has been read.
 
-value     motion
-   1      counterclockwise rotation
-   2      left
-   4      down (soft drop)
-   8      right
-  16      clockwise rotation
+    value     motion
+       1      counterclockwise rotation
+       2      left
+       4      down (soft drop)
+       8      right
+      16      clockwise rotation
 
 **Scoring system**
 
