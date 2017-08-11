@@ -45,7 +45,7 @@ The second argument given to these gates dictate how many bits to shift.
 We just need to 1: make sure that the 12 most significant bits are not on (otherwise the output is simply 0), and 2: delay the data the right amount based on the 4 least significant bits.
 This is easy with a bunch of AND/ANT gates, and a multiplexer
 
-![SRL](http://imgur.com/wtAkNw1)
+![SRL](http://imgur.com/wtAkNw1.png)
 
 ## SR latch
 There are many times during the designing of this computer where we need to store data.
