@@ -172,7 +172,7 @@ Gray code:
     5. MNZ A4 0 0;      if the result is not zero (Gray code != 101010) repeat loop
     6. ADD A1 1 1;      branch delay slot, increment destination address
 
-This code computes Gray code and stores the code in succesive addresses starting at address 5.  This program utilizes several important features such as indirect addressing and a conditional jump.
+This program computes Gray code and stores the code in succesive addresses starting at address 5.  This program utilizes several important features such as indirect addressing and a conditional jump.  It halts once the resultant Gray code is `101010`, which happens for input 51 at address 56.
 
 ### Online Interpreter
 
