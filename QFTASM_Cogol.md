@@ -47,7 +47,7 @@ The bit-shifting operations are the most complex operations handled by the ALU. 
 
 Our processor has two bit shift operations, "shift left" (`SL`) and "shift right logical" (`SRL`).  These bit shifts fill in the new bits with all zeros (meaning that a negative number shifted right will no longer be negative).  So far we have found these shifts to be sufficient.
 
-There were plans for a "shift right arithmetic" (`SRA`) operation which preserved the sign of the input, and therefore acted as a true division by two, but this plan was cancelled due to the difficulty of implementation.
+There were plans for a "shift right arithmetic" (`SRA`) operation which preserved the sign of the input, and therefore acted as a true division by two, but this plan was postponed due to the difficulty of implementation.
 
 ### Instruction Pipelining
 
@@ -136,7 +136,7 @@ As discussed earlier, there are ten opcodes supported by the computer, each of w
     SL [val1] [val2] [dest]    – Shift Left; store [val1] << [val2] in [dest].
     SRL [val1] [val2] [dest]   – Shift Right Logical; store [val1] >>> [val2] in [dest]. Doesn't preserve sign.
 
-There was also an 11th planned but unimplemented instruction.  This instruction, however, is still supported by interpreters.
+Because SRA was postponed, it is unimplemented in the computer.  This instruction, however, is still supported by interpreters.
 
     SRA [val1] [val2] [dest]   – Shift Right Arithmetic; store [val1] >> [val2] in [dest], while preserving sign.
 
