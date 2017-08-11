@@ -1,4 +1,4 @@
-# Hardware
+# Part 3: Hardware
 
 With our knowledge of logic gates and the general structure of the processor, we can start designing all the components of the computer.
 
