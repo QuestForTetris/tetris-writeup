@@ -70,7 +70,7 @@ So, our computer (with the Tetris ROM) has a bounding box of 1,436 x 5,082. Of t
 
 I included those calculations here because I neglected to run them before starting the script, and very quickly ran out of memory on my computer. After a panicked `kill` command, I made a modification to the metafier script. Every 10 lines of metapixels, the pattern is saved to disk (as a gzipped RLE file), and the grid is flushed. This adds extra runtime to the translation and uses more disk space, but keeps memory usage within acceptable limits. Because Golly uses an extended RLE format that includes the location of the pattern, this doesn't add any more complexity to the loading of the pattern - just open all of the pattern files on the same layer.
 
-The pattern file of the entire computer and ROM in Game of Life can be found [TO BE ADDED]().
+The pattern file of the entire computer and ROM in Game of Life can be found [here](https://drive.google.com/open?id=0B0fELPls4hjOYzVYYjhfaU0zbVU).
 
 ---
 
