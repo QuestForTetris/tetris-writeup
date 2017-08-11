@@ -37,3 +37,25 @@ Next we just need to convert the parallel signal to serial data, and the ROM is 
 [![Parallel to serial converter](http://imgur.com/lQCOFTm.png)](http://play.starmaninnovations.com/varlife/cPnZMldukU)
 
 [![ROM](http://imgur.com/rwF6CL9.png)](http://play.starmaninnovations.com/varlife/gowVDURoIc)
+
+## SRL, SL
+These two logic gates are more complicated than your typical AND, OR, XOR, etc.
+To make these gates work, we will just delay the clock signal an appropriate amount of time to cause a "shift" in the data
+The second argument given to these gates dictate how many bits to shift.
+We just need to 1: make sure that the 12 most significant bits are not on (otherwise the output is simply 0), and 2: delay the data the right amount based on the 4 least significant bits.
+This is easy with a bunch of AND/ANT gates, and a multiplexer
+
+![SRL](http://imgur.com/wtAkNw1)
+
+## SR latch
+There are many times during the designing of this computer where we need to store data.
+Using 2 red B12/S1 cells, we can do just that.
+The two cells can keep each other on, and can also stay off together.
+Using some extra set, reset, and read circuitry, we can make a simple SR latch.
+
+[![SR latch](http://imgur.com/W7eNmfr.png)](http://play.starmaninnovations.com/varlife/qiFFgGEvRd)
+
+## Synchronizer
+## Read Queue
+## ALU
+## RAM
