@@ -182,7 +182,7 @@ El'endia Starman has created a very useful online interpreter [here](http://play
 
 Once the architecture and assembly language were defined, the next step on the "software" side of the project was the creation of a higher-level language, something suitable for Tetris.  Thus I created Cogol.  The name is both a pun on "COBOL" and an acronym for "C of Game of Life", although it is worth noting that Cogol is to C what our computer is to an actual computer.
 
-Cogol exists at a level just above assembly language.  Generally, most lines in a Gogol program each correspond to a single line of assembly, but there are some important features of the language:
+Cogol exists at a level just above assembly language.  Generally, most lines in a Cogol program each correspond to a single line of assembly, but there are some important features of the language:
 
 - Basic features include named variables with assignments and operators that have more readable syntax.  For example, `ADD A1 A2 3` becomes `z = x + y;`, with the compiler mapping variables onto addresses.
 - Looping constructs such as `if(){}`, `while(){}`, and `do{}while();` so the compiler handles branching.
@@ -203,7 +203,7 @@ Parsing is also done in a single-pass fashion.  The compiler has methods for han
 
 **Global Memory Allocation**
 
-The compiler assigns each global variable (word or array) its own designated RAM address(es).  It is necessary to declare all variables using the keyword `my` so that the compiler knows to allocated space for it.  Much cooler than named global variables is the scratch address memory management.  Many instructions (notably conditionals and many array accesses) require temporary "scratch" addresses to store intermediate calculations.  During the compilation process the compiler allocates and de-allocates scratch addresses as necessary.  If the compiler needs more scratch addresses, it will dedicate more RAM as scratch addresses.  I believe it's typical for a program to only require a few scratch addresses, although each scratch address will be used many times.
+The compiler assigns each global variable (word or array) its own designated RAM address(es).  It is necessary to declare all variables using the keyword `my` so that the compiler knows to allocate space for it.  Much cooler than named global variables is the scratch address memory management.  Many instructions (notably conditionals and many array accesses) require temporary "scratch" addresses to store intermediate calculations.  During the compilation process the compiler allocates and de-allocates scratch addresses as necessary.  If the compiler needs more scratch addresses, it will dedicate more RAM as scratch addresses.  I believe it's typical for a program to only require a few scratch addresses, although each scratch address will be used many times.
 
 **`IF` Statements**
 
