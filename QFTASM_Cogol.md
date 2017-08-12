@@ -179,3 +179,103 @@ This program computes Gray code and stores the code in succesive addresses start
 El'endia Starman has created a very useful online interpreter [here](http://play.starmaninnovations.com/qftasm/).  You are able to step through the code, set breakpoints, perform manual writes to RAM, and visualize the RAM as a display.
 
 ### Cogol
+
+Once the architecture and assembly language were defined, the next step on the "software" side of the project was the creation of a higher-level language, something suitable for Tetris.  Thus I created Cogol.  The name is both a pun on "COBOL" and an acronym for "C of Game of Life", although it is worth noting that Cogol is to C what our computer is to an actual computer.
+
+Cogol exists at a level just above assembly language.  Generally, most lines in a Gogol program each correspond to a single line of assembly, but there are some important features of the language:
+
+- Basic features include named variables with assignments and operators that have more readable syntax.  For example, `ADD A1 A2 3` becomes `z = x + y;`, with the compiler mapping variables onto addresses.
+- Looping constructs such as `if(){}`, `while(){}`, and `do{}while();` so the compiler handles branching.
+- One-dimensional arrays (with pointer arithmetic), which are used for the Tetris board.
+- Subroutines and a call stack.  These are useful for preventing duplication of large chunks of code, and for supporting recursion.
+
+The compiler (which I wrote from scratch) is very basic/naive, but I've attempted to hand-optimize several of the language constructs to achieve a short compiled program length.
+
+Here are some short overviews about how various language features work:
+
+**Tokenization**
+
+The source code is tokenized linearly (single-pass), using simple rules about which characters are allowed to be adjacent within a token.  When a character is encountered that cannot be adjacent to the last character of the current token, the current token is deemed complete and the new character begins a new token.  Some characters (such as `{` or `,`) cannot be adjacent to any other characters and are therefore their own token.  Others (like `>` or `=`) are only allowed to be adjacent to themselves, and can thus form tokens like `>>>` or `==`.  Whitespace characters force a boundary between tokens but aren't themselves included in the result.  The most difficult character to tokenize is `-` because it can both represent subtraction and unary negation, and thus requires some special-casing.
+
+**Parsing**
+
+Parsing is also done in a single-pass fashion.  The compiler has methods for handling each of the different language constructs, and tokens are popped off of the global token list as they are consumed by the various compiler methods.  If the compiler ever sees a token that it does not expect, it raises a syntax error.
+
+**Global Memory Allocation**
+
+The compiler assigns each global variable (word or array) its own designated RAM address(es).  It is necessary to declare all variables using the keyword `my` so that the compiler knows to allocated space for it.  Much cooler than named global variables is the scratch address memory management.  Many instructions (notably conditionals and many array accesses) require temporary "scratch" addresses to store intermediate calculations.  During the compilation process the compiler allocates and de-allocates scratch addresses as necessary.  If the compiler needs more scratch addresses, it will dedicate more RAM as scratch addresses.  I believe it's typical for a program to only require a few scratch addresses, although each scratch address will be used many times.
+
+**`IF` Statements**
+
+`IF` statements take this form:
+
+    other code
+    if (cond) {
+      body
+    }
+    other code
+
+When converted to QFTASM, the code is arranged like this:
+
+    other code
+    condition test
+    conditional jump
+    body
+    other code (jump target)
+
+In the assembly, a condition test is usually just a subtraction, and the sign of the result determines whether to make the jump or execute the body.  An `MLZ` instruction is used to handle inequalities such as `>` or `<=`.  An `MNZ` instruction is used to handle `==`, since it jumps over the body when the difference is not zero (and therefore when the arguments are not equal).
+
+**`WHILE` Statements**
+
+`WHILE` statements take this form:
+
+    other code
+    while (cond) {
+      body
+    }
+    other code
+
+When converted to QFTASM, the code is arranged like this:
+
+    other code
+    unconditional jump
+    body (conditional jump target)
+    condition test (unconditional jump target)
+    conditional jump
+    other code
+
+The condition testing and conditional jump are at the end of the block, which means they are re-executed after each execution of the block.  When the condition is returns false the body is not repeated and the loop ends.  During the start of loop execution, control flow jumps over the loop body to the condition code, so the body is never executed if the condition is false the first time.
+
+An `MLZ` instruction is used to handle inequalities such as `>` or `<=`.  Unlike during `IF` statements, an `MNZ` instruction is used to handle `!=`, since it jumps to the body when the difference is not zero (and therefore when the arguments are not equal).
+
+**`DO-WHILE` Statements**
+
+`DO-WHILE` statements take this form:
+
+    other code
+    do {
+      body
+    } while (cond);
+    other code
+
+When converted to QFTASM, the code is arranged like this:
+
+    other code
+    body (conditional jump target)
+    condition test
+    conditional jump
+    other code
+
+The only difference between `WHILE` and `DO-WHILE` is that the a `DO-WHILE` loop body is not initially skipped over so it is always executed at least once.  I generally use `DO-WHILE` statements to save a couple lines of assembly code when I know the loop will never need to be skipped entirely.
+
+**Arrays**
+
+**Subroutines**
+
+**Debugging Labels**
+
+Any `{...}` code block in a Cogol program can be preceded by a multi-word descriptive label.  This label is attached as a comment in the compiled assembly code, and can be very useful for debugging since it makes it easier to locate specific chunks of code.
+
+**Branch Delay Slot Optimization**
+
+### Writing the Tetris code in Cogol
