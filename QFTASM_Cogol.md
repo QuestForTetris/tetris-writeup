@@ -178,7 +178,7 @@ This program computes Gray code and stores the code in succesive addresses start
 
 El'endia Starman has created a very useful online interpreter [here](http://play.starmaninnovations.com/qftasm/).  You are able to step through the code, set breakpoints, perform manual writes to RAM, and visualize the RAM as a display.
 
-### Cogol
+### [Cogol](https://github.com/QuestForTetris/Cogol)
 
 Once the architecture and assembly language were defined, the next step on the "software" side of the project was the creation of a higher-level language, something suitable for Tetris.  Thus I created Cogol.  The name is both a pun on "COBOL" and an acronym for "C of Game of Life", although it is worth noting that Cogol is to C what our computer is to an actual computer.
 
@@ -205,13 +205,15 @@ Parsing is also done in a single-pass fashion.  The compiler has methods for han
 
 The compiler assigns each global variable (word or array) its own designated RAM address(es).  It is necessary to declare all variables using the keyword `my` so that the compiler knows to allocate space for it.  Much cooler than named global variables is the scratch address memory management.  Many instructions (notably conditionals and many array accesses) require temporary "scratch" addresses to store intermediate calculations.  During the compilation process the compiler allocates and de-allocates scratch addresses as necessary.  If the compiler needs more scratch addresses, it will dedicate more RAM as scratch addresses.  I believe it's typical for a program to only require a few scratch addresses, although each scratch address will be used many times.
 
-**`IF` Statements**
+**`IF-ELSE` Statements**
 
-`IF` statements take this form:
+The syntax for `if-else` statements is the standard C form:
 
     other code
     if (cond) {
-      body
+      first body
+    } else {
+      second body
     }
     other code
 
@@ -220,14 +222,26 @@ When converted to QFTASM, the code is arranged like this:
     other code
     condition test
     conditional jump
-    body
-    other code (jump target)
+    first body
+    unconditional jump
+    second body (conditional jump target)
+    other code (unconditional jump target)
 
-In the assembly, a condition test is usually just a subtraction, and the sign of the result determines whether to make the jump or execute the body.  An `MLZ` instruction is used to handle inequalities such as `>` or `<=`.  An `MNZ` instruction is used to handle `==`, since it jumps over the body when the difference is not zero (and therefore when the arguments are not equal).
+If the first body is executed, the second body is skipped over.  If the first body is skipped over, the second body is executed.
+
+In the assembly, a condition test is usually just a subtraction, and the sign of the result determines whether to make the jump or execute the body.  An `MLZ` instruction is used to handle inequalities such as `>` or `<=`.  An `MNZ` instruction is used to handle `==`, since it jumps over the body when the difference is not zero (and therefore when the arguments are not equal).  Multi-expression conditionals are not currently supported.
+
+If the `else` statement is omitted, the uncoditional jump is also omitted, and the QFTASM code looks like this:
+
+    other code
+    condition test
+    conditional jump
+    body
+    other code (conditional jump target)
 
 **`WHILE` Statements**
 
-`WHILE` statements take this form:
+The syntax for `while` statements is also the standard C form:
 
     other code
     while (cond) {
@@ -246,31 +260,83 @@ When converted to QFTASM, the code is arranged like this:
 
 The condition testing and conditional jump are at the end of the block, which means they are re-executed after each execution of the block.  When the condition is returns false the body is not repeated and the loop ends.  During the start of loop execution, control flow jumps over the loop body to the condition code, so the body is never executed if the condition is false the first time.
 
-An `MLZ` instruction is used to handle inequalities such as `>` or `<=`.  Unlike during `IF` statements, an `MNZ` instruction is used to handle `!=`, since it jumps to the body when the difference is not zero (and therefore when the arguments are not equal).
+An `MLZ` instruction is used to handle inequalities such as `>` or `<=`.  Unlike during `if` statements, an `MNZ` instruction is used to handle `!=`, since it jumps to the body when the difference is not zero (and therefore when the arguments are not equal).
 
 **`DO-WHILE` Statements**
 
-`DO-WHILE` statements take this form:
-
-    other code
-    do {
-      body
-    } while (cond);
-    other code
-
-When converted to QFTASM, the code is arranged like this:
-
-    other code
-    body (conditional jump target)
-    condition test
-    conditional jump
-    other code
-
-The only difference between `WHILE` and `DO-WHILE` is that the a `DO-WHILE` loop body is not initially skipped over so it is always executed at least once.  I generally use `DO-WHILE` statements to save a couple lines of assembly code when I know the loop will never need to be skipped entirely.
+The only difference between `while` and `do-while` is that the a `do-while` loop body is not initially skipped over so it is always executed at least once.  I generally use `do-while` statements to save a couple lines of assembly code when I know the loop will never need to be skipped entirely.
 
 **Arrays**
 
-**Subroutines**
+One-dimensional arrays are implemented as contiguous blocks of memory.  All arrays are fixed-length based on their declaration.  Arrays are declared like so:
+
+    my alpha[3];               # empty array
+    my beta[11] = {3,2,7,8};   # first four elements are pre-loaded with those values
+
+For the array, this is a possible RAM mapping, showing how addresses 15-18 are reserved for the array:
+
+    15: alpha
+    16: alpha[0]
+    17: alpha[1]
+    18: alpha[2]
+
+The address labeled `alpha` is filled with a pointer to the location of `alpha[0]`, so in thie case address 15 contains the value 16.  The `alpha` variable can be used inside of the Cogol code, possibly as a stack pointer if you want to use this array as a stack.
+
+Accessing the elements of an array is done with the standard `array[index]` notation.  If the value of `index` is a constant, this reference is automatically filled in with the absolute address of that element.  Otherwise it performs some pointer arithmetic (just addition) to find the desired absolute address  It is also possible to nest indexing, such as `alpha[beta[1]]`.
+
+**Subroutines and Calling**
+
+Subroutines are blocks of code that can be called from multiple contexts, preventing duplication of code and allowing for the creation of recursive programs.  Here is a program with a recursive subroutine to generate Fibonacci numbers (basically the slowest algorithm):
+
+    # recursively calculate the 10th Fibonacci number
+    call display = fib(10).sum;
+    sub fib(cur,sum) {
+      if (cur <= 2) {
+        sum = 1;
+        return;
+      }
+      cur--;
+      call sum = fib(cur).sum;
+      cur--;
+      call sum += fib(cur).sum;
+    }
+
+A subroutine is declared with the keyword `sub`, and a subroutine can be placed anywhere inside the program.  Each subroutine can have multiple local variables, which are declared as part of its list of arguments.  These arguments can also be given default values.
+
+In order to handle recursive calls, the local variables of a subroutine are stored on the stack.  The last static variable in RAM is the call stack pointer, and all memory after that serves as the call stack.  When a subroutine is called, it created a new frame on the call stack, which includes all local variables as well as the return (ROM) address.  Each subroutine in the program is given a single static RAM address to serve as a pointer.  This pointer gives the location of the "current" call of the subroutine in the call stack.  Referencing a local variable is done using the value of this static pointer plus an offset to give the address of that particular local variable.  Also contained in the call stack is the previous value of the static pointer.  Here's the variables mapping of both the static RAM and the subroutine call frame for the above program:
+
+    RAM map:
+    0: pc
+    1: display
+    2: scratch0
+    3: fib
+    4: scratch1
+    5: scratch2
+    6: scratch3
+    7: call
+
+    fib map:
+    0: return
+    1: previous_call
+    2: cur
+    3: sum
+
+One thing that is interesting about subroutines is that they do not return any particular value.  Rather, all of the local variables of the subroutine can be read after the subroutine is performed, so a variety of data can be extracted from a subroutine call.  This is accomplished by storing the pointer for that specific call of the subroutine, which can then be used to recover any of the local variables from within the (recently-deallocated) stack frame.
+
+There are multiple ways to call a subroutine, all using the `call` keyword:
+
+    call fib(10);   # subroutine is executed, no return vaue is stored
+    
+    call pointer = fib(10);   # execute subroutine and return a pointer
+    display = pointer.sum;    # access a local variable and assign it to a global variable
+    
+    call display = fib(10).sum;   # immediately store a return value
+    
+    call display += fib(10).sum;   # other types of assignment operators can also be used with a return value
+
+Any number of values can be given as arguments for a subroutine call.  Any argument not provided will be filled in with its default value, if any.  An argument that is not provided and has no default value is not cleared (to save instructions/time) so could potentially take on any value at the start of the subroutine.
+
+Pointers are a way of accessing multiple local variables of subroutine, although it is important to note that the pointer is only temporary: the data the pointer points to will be destroyed when another subroutine call is made.
 
 **Debugging Labels**
 
@@ -278,4 +344,8 @@ Any `{...}` code block in a Cogol program can be preceded by a multi-word descri
 
 **Branch Delay Slot Optimization**
 
+In order to improve the speed of the compiled code, the Cogol compiler performs some really basic delay slot optimization as a final pass over the QFTASM code.  For any unconditional jump with an empty branch delay slot, the delay slot can be filled by the first instruction at the jump destination, and the jump destination is incremented by one to point to the next instruction.  This generally saves one cycle each time an unconditional jump is performed.
+
 ### Writing the Tetris code in Cogol
+
+The final Tetris program was written in Cogol, and the source code is available [here](https://github.com/QuestForTetris/Cogol/blob/master/tetris.cgl).  The compiled QFTASM code is available [here](https://github.com/QuestForTetris/Cogol/blob/master/tetris.qftasm).  Since the goal was to golf the assembly code (not the Cogol code), the resultant Cogol code is unwieldy.  Many portions of the program would normally be located in subroutines, but those subroutines were actually short enough that duplicating the code saved instructions over the `call` statements.  The final code only has one subroutine in addition to the main code.  Additionally, many arrays were removed and replaced either with an equivalently-long list of individual variables, or by a lot of hard-coded numbers in the program.  The final compiled QFTASM code is under 300 instructions, although it is only slightly longer than the Cogol source itself.
