@@ -178,9 +178,9 @@ This program computes Gray code and stores the code in succesive addresses start
 
 El'endia Starman has created a very useful online interpreter [here](http://play.starmaninnovations.com/qftasm/).  You are able to step through the code, set breakpoints, perform manual writes to RAM, and visualize the RAM as a display.
 
-### [Cogol](https://github.com/QuestForTetris/Cogol)
+### Cogol
 
-Once the architecture and assembly language were defined, the next step on the "software" side of the project was the creation of a higher-level language, something suitable for Tetris.  Thus I created Cogol.  The name is both a pun on "COBOL" and an acronym for "C of Game of Life", although it is worth noting that Cogol is to C what our computer is to an actual computer.
+Once the architecture and assembly language were defined, the next step on the "software" side of the project was the creation of a higher-level language, something suitable for Tetris.  Thus I created [Cogol](https://github.com/QuestForTetris/Cogol).  The name is both a pun on "COBOL" and an acronym for "C of Game of Life", although it is worth noting that Cogol is to C what our computer is to an actual computer.
 
 Cogol exists at a level just above assembly language.  Generally, most lines in a Cogol program each correspond to a single line of assembly, but there are some important features of the language:
 
