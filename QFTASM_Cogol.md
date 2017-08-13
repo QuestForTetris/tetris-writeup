@@ -282,7 +282,7 @@ For the array, this is a possible RAM mapping, showing how addresses 15-18 are r
 
 The address labeled `alpha` is filled with a pointer to the location of `alpha[0]`, so in thie case address 15 contains the value 16.  The `alpha` variable can be used inside of the Cogol code, possibly as a stack pointer if you want to use this array as a stack.
 
-Accessing the elements of an array is done with the standard `array[index]` notation.  If the value of `index` is a constant, this reference is automatically filled in with the absolute address of that element.  Otherwise it performs some pointer arithmetic (just addition) to find the desired absolute address  It is also possible to nest indexing, such as `alpha[beta[1]]`.
+Accessing the elements of an array is done with the standard `array[index]` notation.  If the value of `index` is a constant, this reference is automatically filled in with the absolute address of that element.  Otherwise it performs some pointer arithmetic (just addition) to find the desired absolute address.  It is also possible to nest indexing, such as `alpha[beta[1]]`.
 
 **Subroutines and Calling**
 
