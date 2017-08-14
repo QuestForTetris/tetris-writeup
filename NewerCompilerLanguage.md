@@ -35,13 +35,19 @@ unsafe operator (int a % int b) -> int
 
 ## Types
 
-This language has both ints and bools, and arrays are yet to be implemented completely.
+This language has both ints and bools, and arrays are yet to be implemented completely. Whatever the type, the only literals one may use are numbers.
 
-(todo examples)
+`int integerA = 5` declares an integer called `integerA` with a value of 5.
+
+`bool booleanA = 1` declares a boolean called `booleanA` with a truthy value.
+
+## Whitespace
+
+This language uses Python-like indenting, meaning whitespace is important. They represent blocks and are used in control flow.
 
 ## Control Flow
 
-This language has if statements, while loops and for loops.
+Every full program has a `main` subroutine that acts just like the `main()` function in C-like languages. From `main`, variables can be declared, other subroutines can be called and if statements, while loops and for loops can be used.
 
 (todo examples)
 
