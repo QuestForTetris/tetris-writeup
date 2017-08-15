@@ -47,7 +47,7 @@ This is easy with a bunch of AND/ANT gates, and a multiplexer
 
 ![SRL](http://imgur.com/wtAkNw1.png)
 
-## SR latch
+## Set-Reset (SR) latch
 There are many times during the designing of this computer where we need to store data.
 Using 2 red B12/S1 cells, we can do just that.
 The two cells can keep each other on, and can also stay off together.
@@ -56,6 +56,11 @@ Using some extra set, reset, and read circuitry, we can make a simple SR latch.
 [![SR latch](http://imgur.com/W7eNmfr.png)](http://play.starmaninnovations.com/varlife/qiFFgGEvRd)
 
 ## Synchronizer
+By converting serial data to parallel data, then setting a bunch of SR latches, we can store a whole word of data.
+Then, to get the data out again, we can just read and reset all of the latches, and delay the data accordingly.
+
+[![Synchronizer](http://imgur.com/fRgFuAR.png)](http://play.starmaninnovations.com/varlife/hYdaWoyjwz)
+
 ## Read Queue
 ## ALU
 ## RAM
