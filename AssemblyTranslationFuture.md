@@ -70,7 +70,9 @@ So, our computer (with the Tetris ROM) has a bounding box of 1,436 x 5,082. Of t
 
 I included those calculations here because I neglected to run them before starting the script, and very quickly ran out of memory on my computer. After a panicked `kill` command, I made a modification to the metafier script. Every 10 lines of metapixels, the pattern is saved to disk (as a gzipped RLE file), and the grid is flushed. This adds extra runtime to the translation and uses more disk space, but keeps memory usage within acceptable limits. Because Golly uses an extended RLE format that includes the location of the pattern, this doesn't add any more complexity to the loading of the pattern - just open all of the pattern files on the same layer.
 
-The pattern file of the entire computer and ROM in Game of Life can be found [here](https://drive.google.com/open?id=0B0fELPls4hjOYzVYYjhfaU0zbVU).
+K Zhang built off of this work, and created a [more efficient metafier script](https://github.com/QuestForTetris/QFT/blob/master/MetafierV2.py) that utilizes the MacroCell file format, which is loads more efficient than RLE for large patterns. This script runs considerably faster (a few seconds, compared to multiple hours for the original metafier script), creates vastly smaller output (121 KB versus 1.7 GB), and can metafy the entire computer and ROM in one fell swoop without using a massive amount of memory. It takes advantage of the fact that MacroCell files encode trees that describe the patterns. By using a custom template file, the metapixels are pre-loaded into the tree, and after some computations and modifications for neighbor detection, the Varlife pattern can simply be appended.
+
+The pattern file of the entire computer and ROM in Game of Life can be found [here](https://github.com/QuestForTetris/QFT/blob/master/TetrisOTCAMP.mc.gz).
 
 ---
 
@@ -78,8 +80,7 @@ The pattern file of the entire computer and ROM in Game of Life can be found [he
 
 Now that we've made Tetris, we're done, right? Not even close. We have several more goals for this project that we are working towards:
 
-- I am working with Dave Greene and K Zhang on a more efficient metafier script, that can run independently of Golly, and will work directly with the MacroCell file format, for faster speed, smaller files, and more efficient memory usage. We're also discussing possibly switching metapixels (or modifying the OTCA metapixel) so that metapixels can be generated and placed independently of each other, for parallelization and more efficient storage.
 - muddyfish and kritixi lithos (?) are continuing work on the higher-level language that compiles to QFTASM.
 - El'endia Starman is working on upgrades to the online QFTASM interpreter, including implementing permalinks.
-- quartata is working on a LLVM backend for the QFT computer, which will allow us to compile any program in any language that LLVM supports and output a ROM that the computer can use.
+- quartata is working on a LLVM backend for the QFT computer, which will allow us to compile any program in any language that LLVM supports and output a ROM that the computer can use. Currently, he has hit a roadblock, and has switched over to working on a GCC backend (which is simpler, but supports fewer languages). Once he finishes one of those backends, I will be working on porting some more-complex programs.
 - We are discussing the next program that we want to write for the QFT computer. Right now, Pong looks like a nice goal.
