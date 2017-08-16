@@ -6,7 +6,7 @@ In short, our computer has a 16-bit asynchronous RISC Harvard architecture.  Whe
 
 For reference, the wireworld computer used a [transport-triggered architecture](https://en.wikipedia.org/wiki/Transport_triggered_architecture), in which the only instruction was `MOV` and computations were performed by writing/reading special registers.  Although this paradigm leads to a very easy-to-implement architecture, the result is also borderline unusable: all arithmetic/logic/conditional operations require *three* instructions.  It was clear to us that we wanted to create a much less esoteric architecture.
 
-in order to keep our processor simple while increasing usability, we made several important design decisions:
+In order to keep our processor simple while increasing usability, we made several important design decisions:
 
 - No registers.  Every address in RAM is treated equally and can be used as any argument for any operation.  In a sense, this means all of RAM could be treated like registers.  This means that there are no special load/store instructions.
 - In a similar vein, memory-mapping.  Everything that could be written to or read from shares a unified addressing scheme.  This means that the program counter (PC) is address 0, and the only difference between regular instructions and control-flow instructions is that control-flow instructions use address 0.
@@ -27,7 +27,7 @@ From here, it was a matter of determining what functionality our processor shoul
 
 Conditional moves are very important and serve as both small-scale and large-scale control flow.  "Small-scale" refers to its ability to control the execution of a particular data move, while "large-scale" refers to its use as a conditional jump operation to transfer control flow to any arbitrary piece of code.  There are no dedicated jump operations because, due to memory mapping, a conditional move can both copy data to regular RAM and copy a destination address to the PC.  We also chose to forgo both unconditional moves and unconditional jumps for a similar reason: both can be implemented as a conditional move with a condition that's hardcoded to TRUE.
 
-We chose to have two different types of conditional moves: "move if not zero" (`MNZ`) and "move if less than zero" (`MLZ`).  Funtionally, `MNZ` amounts to checking whether any bit in the data is a 1, while `MLZ` amounts to checking if the sign bit is 1.  They are useful for equalities and comparisons, respectfully.  The reason we chose these two over others such as "move if zero" (`MEZ`) or "move if greater than zero" (`MGZ`) was that `MEZ` would require creating a TRUE signal from an empty signal, while `MGZ` is a more complex check, requiring the the sign bit be 0 while at least one other bit be 1.
+We chose to have two different types of conditional moves: "move if not zero" (`MNZ`) and "move if less than zero" (`MLZ`).  Functionally, `MNZ` amounts to checking whether any bit in the data is a 1, while `MLZ` amounts to checking if the sign bit is 1.  They are useful for equalities and comparisons, respectfully.  The reason we chose these two over others such as "move if zero" (`MEZ`) or "move if greater than zero" (`MGZ`) was that `MEZ` would require creating a TRUE signal from an empty signal, while `MGZ` is a more complex check, requiring the the sign bit be 0 while at least one other bit be 1.
 
 **Arithmetic**
 
@@ -43,7 +43,7 @@ Our processor has `AND`, `OR`, and `XOR` instructions which do as you would expe
 
 **Bit Shifting**
 
-The bit-shifting operations are the most complex operations handled by the ALU.  They take two datta inputs: a value to shift and an amount to shift it by.  Despite their complexity (due to the variable amount of shifting), these operations are crucial for many important tasks, including the many "graphical" operations involved in Tetris.  Bit shifts would also serve as the foundation for efficient multiplication/dividion algorithms.
+The bit-shifting operations are the most complex operations handled by the ALU.  They take two data inputs: a value to shift and an amount to shift it by.  Despite their complexity (due to the variable amount of shifting), these operations are crucial for many important tasks, including the many "graphical" operations involved in Tetris.  Bit shifts would also serve as the foundation for efficient multiplication/dividion algorithms.
 
 Our processor has two bit shift operations, "shift left" (`SL`) and "shift right logical" (`SRL`).  These bit shifts fill in the new bits with all zeros (meaning that a negative number shifted right will no longer be negative).  If the second argument of the shift is outside the range of 0 to 15, the result is all zeros, as you might expect.
 
