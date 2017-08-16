@@ -83,4 +83,12 @@ The RAM's output is then ANDed with the SR latch, and the clock signal from the 
 ![Read Queue](http://imgur.com/EkqUHae.png)
 
 ## ALU
+The ALU functions similarly to the read queue.
+First, the SR latch of the logic circuit corresponding to the opcode of the instruction is set using a multiplexer.
+Next, the first and second argument's values are ANDed with the SR latch, and then are passed to the logic circuits.
+The clock signal resets the latch as it's passing so that the ALU can be used again.
+(Most of the circuitry is golfed down, and a ton of delay management is shoved in, so it looks like a bit of a mess)
+
+![ALU](http://imgur.com/hpQLlw9.png)
+
 ## RAM
