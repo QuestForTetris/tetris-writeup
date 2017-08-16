@@ -72,19 +72,30 @@ This locates the start and end of a named subroutine. The low level compiler add
 #### `if` and `while`
 
 
-...
+Both the `while` and `if` low level interpreters are pretty simple: they get pointers to their conditions and jump depending on them. `while` loops are slightly different in that they're compiled as 
+
+
+    ...
+    condition
+    jump to check
+    code
+    condition
+    if condtion: jump to code
+    ...
 
 #### `call_sub` and `return`
 
 
-...
+Unlike most architectures, the computer we're compiling for doesn't have hardware support for a stack in the way of instructions for pushing and popping from a stack. This means that both pushing and popping from the stack take two instructions: Decrementing the stack pointer and copying the value to an address in the case of popping or copying a value from an address to the address at the current stack pointer and then incrementing it in the case of pushing.
+
+All the locals for a subroutine are stored at a fixed location in RAM determined at compile time. In order to make recursion work, all the locals for a function are placed onto the stack at the start of a call. Then the arguments to the subroutine are copied to their position in the local store. The value of the return address is put onto the stack and the subroutine executes. When a `return` statement is encountered, the top of the stack is popped off and the program counter is set to that value. The values for the locals of the calling subroutine are the popped off the stack and into their previous position.
 
 #### `assign`
 
 
-...
+Variable assignments are the easiest things to compile: they take a variable and a value and compile into the single line: `MLZ -1 VALUE VARIABLE`
 
 ### Assigning jump targets
 
 
-...
+Finally the compiler works out the jump targets for labels attached to instructions. The absolute position of labels is determined and then references to those labels are replaced with those values. Lables themselves are removed from the code and finally instuction numbers are added to the compiled code.
