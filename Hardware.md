@@ -61,6 +61,26 @@ Then, to get the data out again, we can just read and reset all of the latches, 
 
 [![Synchronizer](http://imgur.com/fRgFuAR.png)](http://play.starmaninnovations.com/varlife/hYdaWoyjwz)
 
+## Read Counter
+This device keeps track of how many more times it needs to address from RAM.
+It does this using a device similar to the SR latch: a T flip flop.
+Every time the T flip flop recieves an input, it changes state: if it was on, it turns off, and vice versa.
+When the T flip flop is turned from on to off, it gives an output pulse, which can be fed into another T flip flop to form a 2 bit counter.
+
+[![Two bit counter](http://imgur.com/ayN556Y.png)](http://play.starmaninnovations.com/varlife/sqMCPQpoLS)
+
+In order to make the Read Counter, we need to set the counter to the addressing mode with two ANT gates, and use the counter's output signal to decide where to direct the clock signal: to the ALU or to the RAM.
+
+
+![Read Counter](http://imgur.com/Zf8t5PH.png)
+
 ## Read Queue
+The read queue needs to keep track of which read counter sent an input to RAM, so that it can send the RAM's output to the correct location.
+To do that, we use some SR latches.
+When a signal is sent to RAM from a read counter, the clock signal is split and sets the counter's SR latch.
+The RAM's output is then ANDed with the SR latch, and the clock signal from the RAM resets the SR latch.
+
+![Read Queue](http://imgur.com/EkqUHae.png)
+
 ## ALU
 ## RAM
