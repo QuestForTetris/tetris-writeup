@@ -105,6 +105,6 @@ For writing, the address is sent into a different multiplexer, the data to be wr
 Wherever the address is sent to is where the RAM's value is updated.
 Each 22x22 metapixel RAM unit has this basic structure:
 
-![RAM unit](http://imgur.com/zmjUg6p)
+![RAM unit](http://imgur.com/zmjUg6p.png)
 
 ![RAM](http://imgur.com/ytVtD1k.png)
