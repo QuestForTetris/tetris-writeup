@@ -45,9 +45,7 @@ Our processor has `AND`, `OR`, and `XOR` instructions which do as you would expe
 
 The bit-shifting operations are the most complex operations handled by the ALU.  They take two data inputs: a value to shift and an amount to shift it by.  Despite their complexity (due to the variable amount of shifting), these operations are crucial for many important tasks, including the many "graphical" operations involved in Tetris.  Bit shifts would also serve as the foundation for efficient multiplication/dividion algorithms.
 
-Our processor has two bit shift operations, "shift left" (`SL`) and "shift right logical" (`SRL`).  These bit shifts fill in the new bits with all zeros (meaning that a negative number shifted right will no longer be negative).  If the second argument of the shift is outside the range of 0 to 15, the result is all zeros, as you might expect.
-
-There were plans for a "shift right arithmetic" (`SRA`) operation which preserved the sign of the input, and therefore acted as a true division by two, but this plan was postponed due to the difficulty of implementation.  So far we have found our current two shifts to be sufficient.
+Our processor has three bit shift operations, "shift left" (`SL`), "shift right logical" (`SRL`), and "shift right arithmetic" (`SRA`).  The first two bit shifts (`SL` and `SRL`) fill in the new bits with all zeros (meaning that a negative number shifted right will no longer be negative).  If the second argument of the shift is outside the range of 0 to 15, the result is all zeros, as you might expect. For the last bit shift, `SRA`, the bit shift preserves the sign of the input, and therefore acts as a true division by two.
 
 ### Instruction Pipelining
 
@@ -69,7 +67,7 @@ The opcode is 4 bits to support 16 unique opcodes, of which 10 are assigned:
     0111  ANT    bitwise And-NoT
     1000  SL     Shift Left
     1001  SRL    Shift Right Logical
-    1010  reserved for SRA (Shift Right Arithmetic)
+    1010  SRA    Shift Right Arithmetic
     1011  unassigned
     1100  unassigned
     1101  unassigned
@@ -135,9 +133,6 @@ As discussed earlier, there are ten opcodes supported by the computer, each of w
     ANT [val1] [val2] [dest]   – bitwise And-NoT; store [val1] & (![val2]) in [dest].
     SL [val1] [val2] [dest]    – Shift Left; store [val1] << [val2] in [dest].
     SRL [val1] [val2] [dest]   – Shift Right Logical; store [val1] >>> [val2] in [dest]. Doesn't preserve sign.
-
-Because SRA was postponed, it is unimplemented in the computer.  This instruction, however, is still supported by interpreters.
-
     SRA [val1] [val2] [dest]   – Shift Right Arithmetic; store [val1] >> [val2] in [dest], while preserving sign.
 
 **Addressing Modes**
