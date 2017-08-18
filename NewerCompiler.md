@@ -1,5 +1,5 @@
 # The Newer Compiler to QFTASM
-It was decided that COGOL was a bit too low level to create Tetris in readably.
+Although Cogol is sufficient for a rudimentary Tetris implementation, it is too simple and too low-level for general-purpose programming at an easily readable level.
 A new language started being created in September 2016.
 Progress on the language was slow due to hard to understand bugs as well as real life.
 We built a low level language with similar syntax to Python, including a simple type system, subroutines supporting recursion and inline operators.
@@ -99,3 +99,66 @@ Variable assignments are the easiest things to compile: they take a variable and
 
 
 Finally the compiler works out the jump targets for labels attached to instructions. The absolute position of labels is determined and then references to those labels are replaced with those values. Lables themselves are removed from the code and finally instuction numbers are added to the compiled code.
+
+## Example step by step compilation
+
+
+Now we've gone through all the stages, let's go through an actual compilation process for an actual program, step by step.
+    
+    #include stdint
+
+    sub main
+        a = 8
+        b = 12
+        c = a * b
+
+
+Ok, simple enough. It should be obvious that at the end of the program, `a = 8`, `b = 12`, `c = 96`. Firstly, lets include the relevent parts of `stdint.txt`:
+
+    operator (int a + int b) -> int
+        return __ADD__(a, b)
+
+    operator (int a - int b) -> int
+        return __SUB__(a, b)
+
+    operator (int a < int b) -> bool
+        bool rtn = 0
+        rtn = __MLZ__(a-b, 1)
+        return rtn
+
+    unsafe operator (int a * int b) -> int
+        int rtn = 0
+        for (int i = 0; i < b; i+=1)
+            rtn += a
+        return rtn
+
+    sub main
+        int a = 8
+        int b = 12
+        int c = a * b
+
+Ok, slightly more complicated. Let's move onto the tokeniser and see what comes out. At this stage, we'll only have a linear flow of tokens without any form of structure
+
+    NAME NAME operator
+    LPAR OP (
+    NAME NAME int
+    NAME NAME a
+    PLUS OP +
+    NAME NAME int
+    NAME NAME b
+    RPAR OP )
+    OP OP ->
+    NAME NAME int
+    NEWLINE NEWLINE
+    INDENT INDENT     
+    NAME NAME return
+    NAME NAME __ADD__
+    LPAR OP (
+    NAME NAME a
+    COMMA OP ,
+    NAME NAME b
+    RPAR OP )
+    ...
+
+Now all the tokens get put through the grammar parser and outputs a tree with the 
+
