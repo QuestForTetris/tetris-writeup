@@ -101,7 +101,7 @@ The RAM was one of the most complicated parts of this project.
 It required for a very specific control over each SR latch that stored data.
 For reading, the address is sent into a multiplexer and sent to the RAM units.
 The RAM units output the data they store in parallel, which is converted to serial and outputted.
-For writing, the address is sent into a different multiplexer, the data to be written is converted from serial to parrallel, and the RAM units would propagte the signal throughout the RAM.
+For writing, the address is sent into a different multiplexer, the data to be written is converted from serial to parallel, and the RAM units would propagte the signal throughout the RAM.
 Each 22x22 metapixel RAM unit has this basic structure:
 
 ![RAM unit](http://imgur.com/zmjUg6p.png)
