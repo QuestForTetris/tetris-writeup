@@ -94,6 +94,6 @@ Next, the first and second argument's values are ANDed with the SR latch, and th
 The clock signal resets the latch as it's passing so that the ALU can be used again.
 (Most of the circuitry is golfed down, and a ton of delay management is shoved in, so it looks like a bit of a mess)
 
-![ALU](http://imgur.com/hpQLlw9.png)
+![ALU](http://imgur.com/mC6tMoL.png)
 
 ## RAM
