@@ -88,7 +88,7 @@ The RAM's output is then ANDed with the SR latch, and the clock signal from the 
 ![Read Queue](http://imgur.com/EkqUHae.png)
 
 ## ALU
-The ALU functions similarly to the read queue.
+The ALU functions similarly to the read queue, in that it uses an SR latch to keep track of where to send a signal.
 First, the SR latch of the logic circuit corresponding to the opcode of the instruction is set using a multiplexer.
 Next, the first and second argument's values are ANDed with the SR latch, and then are passed to the logic circuits.
 The clock signal resets the latch as it's passing so that the ALU can be used again.
@@ -97,3 +97,14 @@ The clock signal resets the latch as it's passing so that the ALU can be used ag
 ![ALU](http://imgur.com/mC6tMoL.png)
 
 ## RAM
+The RAM was one of the most complicated parts of this project.
+It required for a very specific control over each SR latch that stored data.
+For reading, the address is sent into a multiplexer and sent to the RAM units.
+The RAM units output the data they store in parallel, which is converted to serial and outputted.
+For writing, the address is sent into a different multiplexer, the data to be written is converted from serial to parrallel, and the RAM units would propagte the signal throughout the RAM.
+Wherever the address is sent to is where the RAM's value is updated.
+Each 22x22 metapixel RAM unit has this basic structure:
+
+![RAM unit](http://imgur.com/zmjUg6p)
+
+![RAM](http://imgur.com/ytVtD1k.png)
