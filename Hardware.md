@@ -38,14 +38,19 @@ Next we just need to convert the parallel signal to serial data, and the ROM is 
 
 [![ROM](http://imgur.com/rwF6CL9.png)](http://play.starmaninnovations.com/varlife/gowVDURoIc)
 
-## SRL, SL
+## SRL, SL, SRA
 These two logic gates are more complicated than your typical AND, OR, XOR, etc.
 To make these gates work, we will just delay the clock signal an appropriate amount of time to cause a "shift" in the data
 The second argument given to these gates dictate how many bits to shift.
 We just need to 1: make sure that the 12 most significant bits are not on (otherwise the output is simply 0), and 2: delay the data the right amount based on the 4 least significant bits.
-This is easy with a bunch of AND/ANT gates, and a multiplexer
+This is easy with a bunch of AND/ANT gates, and a multiplexer.
 
 ![SRL](http://imgur.com/wtAkNw1.png)
+
+The SRA is slightle different, because we need to copy the sign bit during the shift.
+The way we do this is by ANDing the clock signal with the sign bit, and then copy that output a bunch of times with wire splitters and OR gates.
+
+[![SRA](http://imgur.com/GwH8oTJ.png)](http://play.starmaninnovations.com/varlife/DdNReVfSua)
 
 ## Set-Reset (SR) latch
 There are many times during the designing of this computer where we need to store data.
