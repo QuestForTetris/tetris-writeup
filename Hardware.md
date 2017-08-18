@@ -14,7 +14,7 @@ Although every bit of data will be outputted in every 11x11 square, every bit of
 [![Serial to parallel converter](http://imgur.com/v6iX5d9.png)](http://play.starmaninnovations.com/varlife/YnGJhtTyGt)
 
 Next, we will check to see if the parallel data matches a preset address.
-We do this by using AND and ANT gates on the clock and parallel data
+We do this by using AND and ANT gates on the clock and parallel data.
 However, we need to make sure that the parallel data is also outputted so that it can be compared again.
 These are the gates that I came up with:
 
@@ -28,7 +28,7 @@ Finally, we just split the clock signal, and stack a bunch of signal checkers (e
 The ROM is supposed to take an address as an input, and send out the instruction at that address as output.
 We start by using a multiplexer to direct the clock signal to one of the instructions.
 Next, we need to generate a signal using some wire crossings and OR gates.
-The wire crossings enable the clock signal to travel down all 58 bits of the instruction, and also allow for a generated signal (currently in parallel) to move down through the ROM to be outputted
+The wire crossings enable the clock signal to travel down all 58 bits of the instruction, and also allow for a generated signal (currently in parallel) to move down through the ROM to be outputted.
 
 [![ROM bits](http://imgur.com/Nlj8B2F.png)](http://play.starmaninnovations.com/varlife/ZExrQPCgwf)
 
@@ -40,7 +40,7 @@ Next we just need to convert the parallel signal to serial data, and the ROM is 
 
 ## SRL, SL, SRA
 These two logic gates are more complicated than your typical AND, OR, XOR, etc.
-To make these gates work, we will just delay the clock signal an appropriate amount of time to cause a "shift" in the data
+To make these gates work, we will just delay the clock signal an appropriate amount of time to cause a "shift" in the data.
 The second argument given to these gates dictate how many bits to shift.
 We just need to 1: make sure that the 12 most significant bits are not on (otherwise the output is simply 0), and 2: delay the data the right amount based on the 4 least significant bits.
 This is easy with a bunch of AND/ANT gates, and a multiplexer.
@@ -53,7 +53,7 @@ The way we do this is by ANDing the clock signal with the sign bit, and then cop
 [![SRA](http://imgur.com/GwH8oTJ.png)](http://play.starmaninnovations.com/varlife/DdNReVfSua)
 
 ## Set-Reset (SR) latch
-There are many times during the designing of this computer where we need to store data.
+Many portions of the processor's functionality rely on the ability to store data.
 Using 2 red B12/S1 cells, we can do just that.
 The two cells can keep each other on, and can also stay off together.
 Using some extra set, reset, and read circuitry, we can make a simple SR latch.
@@ -75,7 +75,6 @@ When the T flip flop is turned from on to off, it gives an output pulse, which c
 [![Two bit counter](http://imgur.com/ayN556Y.png)](http://play.starmaninnovations.com/varlife/sqMCPQpoLS)
 
 In order to make the Read Counter, we need to set the counter to the addressing mode with two ANT gates, and use the counter's output signal to decide where to direct the clock signal: to the ALU or to the RAM.
-
 
 ![Read Counter](http://imgur.com/Zf8t5PH.png)
 
