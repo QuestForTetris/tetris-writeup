@@ -160,5 +160,86 @@ Ok, slightly more complicated. Let's move onto the tokeniser and see what comes 
     RPAR OP )
     ...
 
-Now all the tokens get put through the grammar parser and outputs a tree with the 
+Now all the tokens get put through the grammar parser and outputs a tree with the names of each of the sections. This shows the high level structure as read by the code.
 
+    GrammarTree file
+     'stmts': [GrammarTree stmts_0
+      '_block_name': 'inline'
+      'inline': GrammarTree inline
+       '_block_name': 'two_op'
+       'type_var': GrammarTree type_var
+        '_block_name': 'type'
+        'type': 'int'
+        'name': 'a'
+        '_global': False
+
+       'operator': GrammarTree operator
+        '_block_name': '+'
+
+       'type_var_2': GrammarTree type_var
+        '_block_name': 'type'
+        'type': 'int'
+        'name': 'b'
+        '_global': False
+       'rtn_type': 'int'
+       'stmts': GrammarTree stmts
+        ...
+        
+This grammar tree sets up information to be parsed by the high level compiler. It includes information such as structure types, attributes of a variable. It takes this information and assigns the variables that are needed, the subroutines. It also inserts all the inlines.
+
+    ('sub', 'start', 'main')
+    ('assign', int main_a, 8)
+    ('assign', int main_b, 12)
+    ('assign', int op(*:rtn), 0)
+    ('assign', int op(*:i), 0)
+    ('assign', global bool scratch_2, 0)
+    ('call_sub', '__SUB__', [int op(*:i), int main_b], global int scratch_3)
+    ('call_sub', '__MLZ__', [global int scratch_3, 1], global bool scratch_2)
+    ('while', 'start', 1, 'for')
+    ('call_sub', '__ADD__', [int op(*:rtn), int main_a], int op(*:rtn))
+    ('call_sub', '__ADD__', [int op(*:i), 1], int op(*:i))
+    ('assign', global bool scratch_2, 0)
+    ('call_sub', '__SUB__', [int op(*:i), int main_b], global int scratch_3)
+    ('call_sub', '__MLZ__', [global int scratch_3, 1], global bool scratch_2)
+    ('while', 'end', 1, global bool scratch_2)
+    ('assign', int main_c, int op(*:rtn))
+    ('sub', 'end', 'main')
+
+Next the low level compiler has to convert this high level representation into QFTASM code. Variables are assigned locations in RAM like so:
+
+    int program_counter
+    int op(*:i)
+    int main_a
+    int op(*:rtn)
+    int main_c
+    int main_b
+    global int scratch_1
+    global bool scratch_2
+    global int scratch_3
+    global int scratch_4
+    global int <result>
+    global int <stack>
+
+The simple instructions are then compiled. Finally instruction numbers are added, resulting in executable QFTASM code.
+
+    0. MLZ 0 0 0;
+    1. MLZ -1 12 11;
+    2. MLZ -1 8 2;
+    3. MLZ -1 12 5;
+    4. MLZ -1 0 3;
+    5. MLZ -1 0 1;
+    6. MLZ -1 0 7;
+    7. SUB A1 A5 8;
+    8. MLZ A8 1 7;
+    9. MLZ -1 15 0;
+    10. MLZ 0 0 0;
+    11. ADD A3 A2 3;
+    12. ADD A1 1 1;
+    13. MLZ -1 0 7;
+    14. SUB A1 A5 8;
+    15. MLZ A8 1 7;
+    16. MNZ A7 10 0;
+    17. MLZ 0 0 0;
+    18. MLZ -1 A3 4;
+    19. MLZ -1 -2 0;
+    20. MLZ 0 0 0;
