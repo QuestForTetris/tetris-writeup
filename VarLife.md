@@ -1,6 +1,7 @@
 ## OTCA Metapixel
 
 <img src="http://www.conwaylife.com/w/images/3/3a/Otcametapixel.png"/>
+(Source: [http://www.conwaylife.com/w/images/3/3a/Otcametapixel.png](http://www.conwaylife.com/w/images/3/3a/Otcametapixel.png))
 
 The [OTCA Metapixel](http://www.conwaylife.com/w/index.php?title=OTCA_metapixel) is a construct in Conway's Game of Life that can be used to simulate any Life-like cellular automata. As the LifeWiki (linked above) says,
 
@@ -15,6 +16,7 @@ I built an online simulator of Life-like rules where you could make any cell beh
 [insert VarLife screenshot here]
 
 Notable features:
+ - Toggle cells between live/dead and paint the board with different rules.
  - The ability to start and stop the simulation, and to do one step at a time. It's also possible to do a given number of steps as fast as possible or more slowly, at the rate set in the ticks-per-second and milliseconds-per-tick boxes.
  - Clear all live cells or to entirely reset the board to a blank state.
  - Can change the cell and board sizes, and also to enable toroidal wrapping horizontally and/or vertically.
@@ -29,7 +31,10 @@ The render-to-gif feature is my favorite both because it took a ton of work to i
 All in all, the VarLife computer only needs four cell types! Eight states in all counting the dead/alive states. They are:
  - B/S (black/white), which serves as a buffer between all components since B/S cells can never be alive.
  - B1/S (blue/cyan), which is the main cell type used to propagate signals.
- - B2/S (green/yellow)
+ - B2/S (green/yellow), which is mainly used for signal control, ensuring it doesn't backpropagate.
+ - B12/S1 (red/orange), which is used in a few specialized situations, such as crossing signals and storing a bit of data.
+ 
+Use this short url to open up VarLife with these rules already encoded: http://play.starmaninnovations.com/varlife/BeeHkfCpNR
 
 ### Wires
 
@@ -37,9 +42,15 @@ There are a few different wire designs with varying characteristics.
 
 This is the easiest and most basic wire in VarLife. Simply a strip of blue bordered by strips of green.
 
-[insert gif]
+[Remember to upload to SE Imgur]  
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/GIokfNXIBZ.gif"/>  
+Short url: http://play.starmaninnovations.com/varlife/DLuvYIOQhP
 
 This wire is unidirectional. That is, it will kill any signal attempting to travel in the opposite direction. It's also one cell narrower than the basic wire.
+
+[insert gif]
+
+Diagonal wires also exist but they are not used much at all.
 
 [insert gif]
 
