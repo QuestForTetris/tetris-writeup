@@ -1,7 +1,7 @@
 ## OTCA Metapixel
 
 <img src="http://www.conwaylife.com/w/images/3/3a/Otcametapixel.png"/>
-(Source: [http://www.conwaylife.com/w/images/3/3a/Otcametapixel.png](http://www.conwaylife.com/w/images/3/3a/Otcametapixel.png))
+([Source](http://www.conwaylife.com/w/images/3/3a/Otcametapixel.png))
 
 The [OTCA Metapixel](http://www.conwaylife.com/w/index.php?title=OTCA_metapixel) is a construct in Conway's Game of Life that can be used to simulate any Life-like cellular automata. As the LifeWiki (linked above) says,
 
@@ -34,7 +34,7 @@ All in all, the VarLife computer only needs four cell types! Eight states in all
  - B2/S (green/yellow), which is mainly used for signal control, ensuring it doesn't backpropagate.
  - B12/S1 (red/orange), which is used in a few specialized situations, such as crossing signals and storing a bit of data.
  
-Use this short url to open up VarLife with these rules already encoded: http://play.starmaninnovations.com/varlife/BeeHkfCpNR
+Use this short url to open up VarLife with these rules already encoded: [http://play.starmaninnovations.com/varlife/BeeHkfCpNR](http://play.starmaninnovations.com/varlife/BeeHkfCpNR).
 
 ### Wires
 
@@ -43,16 +43,20 @@ There are a few different wire designs with varying characteristics.
 This is the easiest and most basic wire in VarLife. Simply a strip of blue bordered by strips of green.
 
 [Remember to upload to SE Imgur]  
-<img src="http://play.starmaninnovations.com/static/d3applets/renders/GIokfNXIBZ.gif"/>  
-Short url: http://play.starmaninnovations.com/varlife/DLuvYIOQhP
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/EMOLGwLAxh.gif"/>  
+Short url: http://play.starmaninnovations.com/varlife/WcsGmjLiBF
 
 This wire is unidirectional. That is, it will kill any signal attempting to travel in the opposite direction. It's also one cell narrower than the basic wire.
 
-[insert gif]
+[Remember to upload to SE Imgur]  
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/AmoesLFnhV.gif"/>  
+Short url: http://play.starmaninnovations.com/varlife/ARWgUgPTEJ
 
 Diagonal wires also exist but they are not used much at all.
 
-[insert gif]
+[Remember to upload to SE Imgur]  
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/yCJvsIHuMQ.gif"/>  
+Short url: http://play.starmaninnovations.com/varlife/kJotsdSXIj
 
 ### Gates
 
