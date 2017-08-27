@@ -60,4 +60,22 @@ Short url: http://play.starmaninnovations.com/varlife/kJotsdSXIj
 
 ### Gates
 
+There are actually a lot of ways to construct each individual gate, so I will only be showing one example of each kind. This first gif demonstrates AND, XOR, and OR gates, respectively. The basic idea here is that a green cell acts like an AND, a blue cell acts like an XOR, and a red cell acts like an OR, and all the other cells around them are just there to control the flow properly.
+
+[Remember to upload to SE Imgur]  
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/ixoJIHLDPe.gif"/>  
+Short url: http://play.starmaninnovations.com/varlife/EGTlKktmeI
+
+[[Question for reviewers: should I include the ANT tile as seen in KZhang's hardware post?]]
+
+While not exactly a *gate*, a wire crossing tile is still very important and useful to have.
+
+[Remember to upload to SE Imgur]  
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/dpvIZIdxMg.gif"/>  
+Short url: http://play.starmaninnovations.com/varlife/OXMsPyaNTC
+
+Incidentally, there is no NOT gate here. That's because without an incoming signal, a constant output must be produced, which does not work well with the variety in timings that the current computer hardware requires. We got along just fine without it anyway.
+
+Also, many components were intentionally designed to fit within an 11 by 11 bounding box (a *tile*) where it takes signals 11 ticks from entering the tile to leave the tile. This makes components more modular and easier to slap together as needed without having to worry about adjusting wires for either spacing or timing.
+
 ### Delay Components
