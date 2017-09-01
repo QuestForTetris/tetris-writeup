@@ -9,6 +9,12 @@ The [OTCA Metapixel](http://www.conwaylife.com/w/index.php?title=OTCA_metapixel)
 
 What [Life-like cellular automata](http://www.conwaylife.com/wiki/Life-like_cellular_automaton#Life-like_cellular_automata) means here is essentially that cells are born and cells survive according to how many of their eight neighbor cells are alive. The syntax for these rules is as follows: a B followed by the numbers of live neighbors that will cause a birth, then a slash, then an S followed by the numbers of live neighbors that will keep the cell alive. A bit wordy, so I think an example will help. The canonical Game of Life can be represented by the rule B23/S3, which says that any dead cell with two or three live neighbors will become alive and any live cell with three neighbors will remain alive. Otherwise, the cell dies.
 
+Despite being a 2048 x 2048 cell, the OTCA metapixel actually has a bounding box of 2058 x 2058 cells, the reason being that it overlaps by five cells in every direction with its neighbors. [[Why? What does this do? I have no idea.]] The birth and survival rules are encoded in a special section of cells at the left side of the metapixel, by the presence or absence of eaters in specific positions along two columns (one for birth, the other for survival). As for detecting the state of neighboring cells, here's how that happens:
+
+> A 9-LWSS stream then goes clockwise around the cell, losing a LWSS for each adjacent ‘on’ cell that triggered a honeybit reaction. The number of missing LWSSes is counted by detecting the position of the front LWSS by crashing another LWSS into it from the opposite direction. This collision releases gliders, which triggers another one or two honeybit reactions if the eaters that indicate that birth/survival condition are absent.
+
+A more detailed diagram of each aspect of the OTCA metapixel can be found at its original website: [How Does It Work?](http://otcametapixel.blogspot.com/2006/05/how-does-it-work.html).
+
 ## VarLife
 
 I built an online simulator of Life-like rules where you could make any cell behave according to any life-like rule and called it "Variations of Life". This name has been shortened to "VarLife" to be more concise. Here's a screenshot of it (link to it here: http://play.starmaninnovations.com/varlife/BeeHkfCpNR):
@@ -66,7 +72,11 @@ There are actually a lot of ways to construct each individual gate, so I will on
 <img src="http://play.starmaninnovations.com/static/d3applets/renders/ixoJIHLDPe.gif"/>  
 Short url: http://play.starmaninnovations.com/varlife/EGTlKktmeI
 
-[[Question for reviewers: should I include the ANT tile as seen in KZhang's hardware post?]]
+The AND-NOT gate, abbreviated to "ANT gate", turned out to be a vital component. It is a gate that passes a signal from A if and only if there is a signal from B too.
+
+[Remember to upload to SE Imgur]
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/RCPmrbcQIQ.gif"/>
+Short url: http://play.starmaninnovations.com/varlife/RsZBiNqIUy
 
 While not exactly a *gate*, a wire crossing tile is still very important and useful to have.
 
@@ -77,5 +87,7 @@ Short url: http://play.starmaninnovations.com/varlife/OXMsPyaNTC
 Incidentally, there is no NOT gate here. That's because without an incoming signal, a constant output must be produced, which does not work well with the variety in timings that the current computer hardware requires. We got along just fine without it anyway.
 
 Also, many components were intentionally designed to fit within an 11 by 11 bounding box (a *tile*) where it takes signals 11 ticks from entering the tile to leave the tile. This makes components more modular and easier to slap together as needed without having to worry about adjusting wires for either spacing or timing.
+
+To see more gates that were discovered/constructed in the process of exploring circuitry components, check out this blog post by PhiNotPi: [Building Blocks: Logic Gates](http://blog.phinotpi.com/2016/05/31/building-blocks-logic-gates/).
 
 ### Delay Components
