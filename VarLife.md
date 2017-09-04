@@ -9,7 +9,7 @@ The [OTCA Metapixel](http://www.conwaylife.com/w/index.php?title=OTCA_metapixel)
 
 What [Life-like cellular automata](http://www.conwaylife.com/wiki/Life-like_cellular_automaton#Life-like_cellular_automata) means here is essentially that cells are born and cells survive according to how many of their eight neighbor cells are alive. The syntax for these rules is as follows: a B followed by the numbers of live neighbors that will cause a birth, then a slash, then an S followed by the numbers of live neighbors that will keep the cell alive. A bit wordy, so I think an example will help. The canonical Game of Life can be represented by the rule B23/S3, which says that any dead cell with two or three live neighbors will become alive and any live cell with three neighbors will remain alive. Otherwise, the cell dies.
 
-Despite being a 2048 x 2048 cell, the OTCA metapixel actually has a bounding box of 2058 x 2058 cells, the reason being that it overlaps by five cells in every direction with its neighbors. [[Why? What does this do? I have no idea.]] The birth and survival rules are encoded in a special section of cells at the left side of the metapixel, by the presence or absence of eaters in specific positions along two columns (one for birth, the other for survival). As for detecting the state of neighboring cells, here's how that happens:
+Despite being a 2048 x 2048 cell, the OTCA metapixel actually has a bounding box of 2058 x 2058 cells, the reason being that it overlaps by five cells in every direction with its *diagonal* neighbors. The overlapping cells serve to intercept gliders - which are emitted to signal the metacells neighbors that it's on - so that they don't interfere with other metapixels or fly off indefinitely. The birth and survival rules are encoded in a special section of cells at the left side of the metapixel, by the presence or absence of eaters in specific positions along two columns (one for birth, the other for survival). As for detecting the state of neighboring cells, here's how that happens:
 
 > A 9-LWSS stream then goes clockwise around the cell, losing a LWSS for each adjacent ‘on’ cell that triggered a honeybit reaction. The number of missing LWSSes is counted by detecting the position of the front LWSS by crashing another LWSS into it from the opposite direction. This collision releases gliders, which triggers another one or two honeybit reactions if the eaters that indicate that birth/survival condition are absent.
 
@@ -72,7 +72,7 @@ There are actually a lot of ways to construct each individual gate, so I will on
 <img src="http://play.starmaninnovations.com/static/d3applets/renders/ixoJIHLDPe.gif"/>  
 Short url: http://play.starmaninnovations.com/varlife/EGTlKktmeI
 
-The AND-NOT gate, abbreviated to "ANT gate", turned out to be a vital component. It is a gate that passes a signal from A if and only if there is a signal from B too.
+The AND-NOT gate, abbreviated to "ANT gate", turned out to be a vital component. It is a gate that passes a signal from A if and only if there is no signal from B. Hence, "A AND NOT B".
 
 [Remember to upload to SE Imgur]
 <img src="http://play.starmaninnovations.com/static/d3applets/renders/RCPmrbcQIQ.gif"/>
@@ -91,3 +91,42 @@ Also, many components were intentionally designed to fit within an 11 by 11 boun
 To see more gates that were discovered/constructed in the process of exploring circuitry components, check out this blog post by PhiNotPi: [Building Blocks: Logic Gates](http://blog.phinotpi.com/2016/05/31/building-blocks-logic-gates/).
 
 ### Delay Components
+
+In the process of designing the computer's hardware, KZhang devised multiple delay components, shown below.
+
+4-tick delay:
+[Remember to upload to SE Imgur]
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/DtSXCsFCJp.gif"/>
+Short url: http://play.starmaninnovations.com/varlife/gebOMIXxdh
+
+5-tick delay:
+[Remember to upload to SE Imgur]
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/qvnHuLucTj.gif"/>
+Short url: http://play.starmaninnovations.com/varlife/JItNjJvnUB
+
+8-tick delay (three different entry points):
+[Remember to upload to SE Imgur]
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/TkNweWIoYG.gif"/>
+Short url: http://play.starmaninnovations.com/varlife/nSTRaVEDvA
+
+11-tick delay:
+[Remember to upload to SE Imgur]
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/UqajvsXjgP.gif"/>
+Short url: http://play.starmaninnovations.com/varlife/kfoADussXA
+
+12-tick delay:
+[Remember to upload to SE Imgur]
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/TWhWkIvPUx.gif"/>
+Short url: http://play.starmaninnovations.com/varlife/bkamAfUfud
+
+14-tick delay:
+[Remember to upload to SE Imgur]
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/LqewwFgbwJ.gif"/>
+Short url: http://play.starmaninnovations.com/varlife/TkwzYIBWln
+
+15-tick delay (verified by comparing with [this](http://play.starmaninnovations.com/varlife/VsRbvzAbmz)):
+[Remember to upload to SE Imgur]
+<img src="http://play.starmaninnovations.com/static/d3applets/renders/DpTqapbTOt.gif"/>
+Short url: http://play.starmaninnovations.com/varlife/jmgpehYlpT
+
+Well, that's it for basic circuitry components in VarLife! See [KZhang's hardware post] for the major circuitry of the computer!
