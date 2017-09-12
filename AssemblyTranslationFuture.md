@@ -82,6 +82,6 @@ Now that we've made Tetris, we're done, right? Not even close. We have several m
 
 - muddyfish and kritixi lithos (?) are continuing work on the higher-level language that compiles to QFTASM.
 - El'endia Starman is working on upgrades to the online QFTASM interpreter, including implementing permalinks.
-- quartata is working on a LLVM backend for the QFT computer, which will allow us to compile any program in any language that LLVM supports and output a ROM that the computer can use. Currently, he has hit a roadblock, and has switched over to working on a GCC backend (which is simpler, but supports fewer languages). Once he finishes one of those backends, I will be working on porting some more-complex programs.
+- quartata is working on a GCC backend, which will allow compilation of freestanding C and C++ code (and potentially other languages, like Fortran, D, or Objective-C) into QFTASM via GCC. This will allow for more sophisticated programs to be created in a more familiar language, albeit without a standard library.
 - One of the biggest hurdles that we have to overcome before we can make more progress is the fact that our tools can't emit position-independent code (e.g. relative jumps). Without PIC, we can't do any linking, and so we miss out on the advantages that come from being able to link to existing libraries. We're working on trying to find a way to do PIC correctly.
 - We are discussing the next program that we want to write for the QFT computer. Right now, Pong looks like a nice goal.
