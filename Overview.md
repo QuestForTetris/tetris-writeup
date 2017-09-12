@@ -1,6 +1,6 @@
 *This began as a quest but ended as an odyssey.*
 
-## Quest for Tetris Processor, (insert bounding box size here)
+## Quest for Tetris Processor, 2,940,928 x 10,407,936
 
 This project is the culmination of the efforts of many users over the course of the past 1 & 1/2 years.  Although the composition of the team has varied over time, the participants as of writing are the following:
 
@@ -17,6 +17,19 @@ We would also like to extend our thanks to 7H3_H4CK3R, Conor O'Brien, and the ma
 Due to the unprecedented scope of this collaboration, this answer is split in parts across multiple answers written by the members of this team.  Each member will write about specific sub-topics, roughly corresponding to the areas of the project in which they were most involved.
 
 ***Please distribute any upvotes or bounties across all members of the team.***
+
+## Table of Contents
+
+(add links when posting!)
+
+1. Overview
+1. Metapixels and VarLife
+1. Hardware
+1. QFTASM and Cogol
+1. New Language and Compiler
+1. Assembly, Translation, and the Future
+
+---
 
 ## Part 1: Overview
 
