@@ -108,9 +108,9 @@ Now we've gone through all the stages, let's go through an actual compilation pr
     #include stdint
 
     sub main
-        a = 8
-        b = 12
-        c = a * b
+        int a = 8
+        int b = 12
+        int c = a * b
 
 
 Ok, simple enough. It should be obvious that at the end of the program, `a = 8`, `b = 12`, `c = 96`. Firstly, lets include the relevent parts of `stdint.txt`:
@@ -243,3 +243,23 @@ The simple instructions are then compiled. Finally instruction numbers are added
     18. MLZ -1 A3 4;
     19. MLZ -1 -2 0;
     20. MLZ 0 0 0;
+
+
+# The Syntax
+
+Now we've got the bare language, we've got to actually write a small program in it. We're using indentation like Python does, splitting logical blocks and control flow. This means whitespace is important for our programes. Every full program has a `main` subroutine that acts just like the `main()` function in C-like languages. The function is ran at the start of the program.
+
+## Variables and types
+
+When variables are defined the first time, they need to have a type associated with them. The currently defined types are `int` and `bool` with the syntax for arrays defined but not the compiler.
+
+## Libraries and operators
+
+A library called `stdint.txt` is available to be used which definines the basic operators. If this isn't included, even simple operators aren't defined. We can use this library with `#include stdint`. It defines operators such as `+`, `>>` and even `*` and `%`, neither of which are direct QFTASM opcodes. The language allows QFTASM opcodes to be direct called with `__OPCODENAME__`.
+
+Addition in `stdint` is defined as
+
+    operator (int a + int b) -> int
+        return __ADD__(a, b)
+
+Which defines what the `+` operator does when given two `int`s.
